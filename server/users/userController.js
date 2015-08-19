@@ -13,17 +13,19 @@ var signup = function(req,res,next){
         User.create({username: req.body.username, password: hash}, function (err, newUser) {
           if (err) {
             console.log("ERROR - ", err);
+            res.statusCode = 400;
+            res.send({response: "ERROR IN DB"});
           } else {
             // Successfully created!
             console.log("Success! newUser === ", newUser);
             res.statusCode = 201;
+            res.send({response: "SUCCESSFULLY SIGNED UP"});
           }
         });
       });
     } else{
-      // user already exists
       res.statusCode = 409;
-      res.send({response: "Failure!"});
+      res.send({response: "USER ALREADY EXISTS"});
     }
   });
 };
