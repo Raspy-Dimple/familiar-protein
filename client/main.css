@@ -57,3 +57,11 @@ form {
 .hide-advert.show-advert {
   visibility: visible;
 }
+.button-link {
+  margin-left: 25px;
+  color: black;
+}
+
+.button-link a:hover {
+ color: black;
+}

@@ -93,7 +93,7 @@ var App = React.createClass({
   render: function() {
     return (
       <div className="container">
-        <NavBarView loggedIn={this.state.loggedIn} />
+        <NavBarView loggedIn={this.state.loggedIn} user={this.state.user} />
         <RouteHandler questions={this.state.questions} user={this.state.user} />
       </div>
     )

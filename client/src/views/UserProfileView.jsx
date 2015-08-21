@@ -73,7 +73,7 @@ var UserInfo = React.createClass({
 		return (
 			<div className="row">
 				<div className="col-md-1">
-					<img className="img-responsive" src="https://placehold.it/150x150" />
+					<img className="img-responsive" src={this.props.user.image} />
 				</div>
 				<div className="col-md-1">
 					<h2>{this.props.user.username}</h2>
@@ -90,10 +90,8 @@ var UserSolved = React.createClass({
 	var userSolvedQuestions = this.props.userSolvedQuestions
 	render: function() {
 		return (
-<<<<<<< HEAD
 
 		);
-||||||| merged common ancestors
 			<div className="row">
 				<div className="col-md-2">
 					<h1>Test1</h1>
@@ -103,7 +101,6 @@ var UserSolved = React.createClass({
 				</div>
 			</div>
 		)
-=======
 			<div className="row">
 				<div className="col-md-6 text-center">
 					<h1>Test1</h1>
@@ -113,7 +110,6 @@ var UserSolved = React.createClass({
 				</div>
 			</div>
 		)
->>>>>>> Adjusts UserProfileView.
 	}
 });
 */
