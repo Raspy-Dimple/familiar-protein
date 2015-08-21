@@ -101,6 +101,10 @@ var App = React.createClass({
         <RouteHandler questions={this.state.questions} user={this.state.user} />
       </div>
     )
+  },
+
+  updateUsers: function(){
+    
   }
 
 });
