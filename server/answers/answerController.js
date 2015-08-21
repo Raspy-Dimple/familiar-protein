@@ -1,7 +1,7 @@
 var Answer = require('./answerModel');
 
 var saveAnswer = function(req, res, next) {
-	Answer.findOne({questionID: req.body.questionID, answer: req.body.answer})
+	Answer.findOne({questionID: req.body.questionID, answer: req.body.answer, userID: req.body.userID})
 	.exec(function(err, data) {
 		if (err) {
 			console.log("FindOne answer error: ", err);
@@ -23,8 +23,8 @@ var saveAnswer = function(req, res, next) {
 };
 
 var loadSolvedQuestion = function(req, res, next) {
-  console.log("loadSolvedQuestion req.body: ", req.body);
-  Answer.find({userID: req.body.userID})
+  console.log("loadSolvedQuestion req.body._id: ", req.body._id);
+  Answer.find({userID: req.body._id})
   .exec(function(err, data) {
   	if (err) {
   		console.log("loadSolvedQuestion find error: ", err);
