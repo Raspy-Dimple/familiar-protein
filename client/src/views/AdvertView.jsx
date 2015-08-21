@@ -1,4 +1,5 @@
 var React = require('react/addons');
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var AdvertView = React.createClass({
   
@@ -36,17 +37,38 @@ var AdvertView = React.createClass({
   render: function() {
     var cx = React.addons.classSet;
     var classes = cx({
+      'advert-steez': true,
+      'row':true,
       'hide-advert': true,
       'show-advert': this.state.showAnswer
     });
 
+    var otherClasses = cx({
+      'advert-steez': true,
+      'row':true,
+      'hide-advert': true,
+      'show-advert': (!this.state.showAnswer)
+    })
+
     return (
-      <div className="advert">
-        <p onClick={this.handleShow}>What happened on this day in {this.state.year}?</p>
-        <div className={classes}>
-          <p>{this.state.content}</p>
-          <p>brought to you by {this.state.sponsor}</p>
-        </div>
+      <div className="advert" onClick={this.handleShow}>
+        <ReactCSSTransitionGroup transitionName="example">
+          <div className={otherClasses}>
+            <h1 className="text-center">What happened on this day in {this.state.year}?</h1>
+          </div>
+        </ReactCSSTransitionGroup>
+        <ReactCSSTransitionGroup transitionName="example">
+          <div className={classes}>
+           
+            <blockquote className="col-md-4 col-md-offset-2">
+              <p>{this.state.content}</p>
+            </blockquote>
+            <div className="col-md-6">
+              <img src="http://equineink.files.wordpress.com/2014/04/exploding-soda.gif" />
+              <div className="test">brought to you by {this.state.sponsor}</div>
+            </div>
+          </div>
+        </ReactCSSTransitionGroup>        
       </div>
     )
   }

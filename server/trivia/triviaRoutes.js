@@ -11,7 +11,7 @@ module.exports = function (app) {
         res.json({
           content: result.body.text,
           year: result.body.year,
-          sponsor: 'Hack Reactor'
+          sponsor: 'Coca-Cola'
         })
         console.log(result.body);
       });
