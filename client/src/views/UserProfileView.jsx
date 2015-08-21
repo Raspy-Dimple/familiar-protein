@@ -4,6 +4,9 @@ var Router = require('react-router');
 var Link = Router.Link;
 
 var UserProfileContainer = React.createClass({
+
+	mixins: [Router.State, Router.Navigation],
+
   getInitialState: function(){
     return {
     	username: null,
@@ -13,9 +16,9 @@ var UserProfileContainer = React.createClass({
 
   componentDidMount: function() {
   	if (this.props.params.username === undefined) {
-  		this.getUserData(this.props.user.username);
-  		//console.log('HEY UNDEFINED THING', this.props.user);
-	  	//console.log("USER! ", this.props.user.username);
+  		this.transitionTo('getUser', {username: this.props.user.username});
+  		//this.getUserData(this.props.user.username);
+	  	console.log("PROPS! ", this.props);
   	}
   },
 
@@ -32,23 +35,25 @@ var UserProfileContainer = React.createClass({
   },
 
   getUserData: function(username) {
-    $.ajax({
-      url: window.location.origin + '/user?username=' + username,
-      method: 'GET',
-      dataType: 'json',
-      success: function(data){
-      	// console.log("AJAX: ", data.userInfo);
-      	this.setState({
-      		username: data.userInfo.username,
-      		user: data.userInfo
-      	}, function () {
-      		console.log("AJAX RESPONSE: ", this.state.user);
-      	})
-      }.bind(this),
-      error: function(xhr, status, err){
-        console.error(xhr, status, err.message);
-      }
-    });
+  	if (username != undefined) {
+	    $.ajax({
+	      url: window.location.origin + '/user?username=' + username,
+	      method: 'GET',
+	      dataType: 'json',
+	      success: function(data){
+	      	// console.log("AJAX: ", data.userInfo);
+	      	this.setState({
+	      		username: data.userInfo.username,
+	      		user: data.userInfo
+	      	}, function () {
+	      		console.log("AJAX RESPONSE: ", this.state.user);
+	      	})
+	      }.bind(this),
+	      error: function(xhr, status, err){
+	        console.error(xhr, status, err.message);
+	      }
+	    });
+  	}
   },
 
 	render: function() {
