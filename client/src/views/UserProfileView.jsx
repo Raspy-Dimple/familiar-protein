@@ -77,7 +77,7 @@ var UserInfo = React.createClass({
 				</div>
 				<div className="col-md-1">
 					<h2>{this.props.user.username}</h2>
-					<p>Email: </p>
+					<p>{this.props.user._id}</p>
 				</div>
 			</div>
 			

@@ -1,6 +1,6 @@
 var Answer = require('./answerModel');
 
-var saveAnswer = function(req, res, next, id) {
+var saveAnswer = function(req, res, next) {
 	console.log("saveAnswer req.body: ", req.body);
 	var newAnswer = new Answer(req.body);
 	newAnswer.save(function(err, data) {
