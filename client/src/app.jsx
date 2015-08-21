@@ -45,6 +45,8 @@ var App = React.createClass({
   },
 
   componentDidMount: function(){
+    console.log('MOUNTED');
+    this.isLoggedIn();
     this.loadAllQuestions();
   },
 
@@ -70,7 +72,7 @@ var App = React.createClass({
             loggedIn: data.loggedIn,
             user: data.user
           }, function() {
-            //console.log ("USER INFO: ", this.state.user);
+            console.log ("USER INFO: ", this.state.user);
           });
 
           if (data.loggedIn === false) {
@@ -112,7 +114,7 @@ var routes = (
   <Route name="app" path="/" handler={App}>
     <DefaultRoute name="default" handler={OverView} />
     <Route name="userProfile" path="user" handler={UserProfileView}>
-      <Route path=":username" handler={UserProfileView}/>
+      <Route name="getUser" path=":username" handler={UserProfileView}/>
     </Route>
     <Route name="login" path="/login" handler={LoginView}/> 
     <Route name="signup" path="/signup" handler={LoginView}/>
