@@ -1,4 +1,5 @@
 var React = require('react');
+var AdvertView = require('./AdvertView.jsx');
 
 var Router = require('react-router');
 var Link = Router.Link;
@@ -56,6 +57,7 @@ var UserProfileContainer = React.createClass({
 			<div>
 				<UserInfo user={this.state.user} />
 				{ /* // <UserSolved user={} question={} />*/ }
+				<AdvertView />
 			</div>
 		);
 	}
