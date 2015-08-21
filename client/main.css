@@ -45,3 +45,15 @@ form {
   font-style: italic;
   color: red;
 }
+
+.advert {
+  background: red;
+}
+
+.hide-advert {
+  visibility: hidden;
+}
+
+.hide-advert.show-advert {
+  visibility: visible;
+}

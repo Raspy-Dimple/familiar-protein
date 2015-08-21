@@ -7,6 +7,7 @@ var UserProfileView = require('./views/UserProfileView.jsx');
 var NavBarView = require('./views/NavBarView.jsx');
 
 // Multiplayer Views
+
 var HomeView = require('./views/MultiplayerViews/HomeView.jsx');
 var CreateGameView = require('./views/MultiplayerViews/CreateGameView.jsx');
 var JoinGameView = require('./views/MultiplayerViews/JoinGameView.jsx');

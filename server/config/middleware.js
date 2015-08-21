@@ -4,6 +4,7 @@ var userRoutes = require('../users/userRoutes');
 var questionRoutes = require('../questions/questionRoutes');
 var gameRoutes = require('../game/gameRoutes');
 var answerRoutes = require('../answers/answerRoutes');
+var triviaRoutes = require('../Trivia/triviaRoutes');
 
 module.exports = function(app) {
   app.use(bodyParser.json());
@@ -14,6 +15,7 @@ module.exports = function(app) {
   // Handle routing for users and questions
   gameRoutes(app);
   userRoutes(app);
+  triviaRoutes(app);
   questionRoutes(app);
   answerRoutes(app);
 };
