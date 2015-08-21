@@ -51,7 +51,9 @@ var App = React.createClass({
     console.log('MOUNTED');
     this.isLoggedIn();
     this.loadAllQuestions();
-    // socket.on('connection', this.ConsoleLog);
+    socket.on('playersJoined', function(){
+      console.log("players joined");
+    });
   },
 
   // Whenever we update any component that's a child of our app,
@@ -59,11 +61,6 @@ var App = React.createClass({
   componentDidUpdate: function() {
     this.isLoggedIn();
   },
-
-  ConsoleLog: function(){
-    console.log("Logging");
-  },
-
   // AJAX request to the server to check if the client is logged in.
   // This is probably a DIRTY way to do it. REALLY DIRTY.
   

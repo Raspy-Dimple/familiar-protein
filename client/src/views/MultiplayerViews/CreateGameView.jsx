@@ -8,11 +8,11 @@ var CreateGameView = React.createClass({
   
   mixins: [Navigation, Router.State],
 
-  componentDidMount: function(){
-    socket.on('playersJoined', function(){
-      console.log("players joined in create game");
-    });
-  },
+  // componentDidMount: function(){
+  //   socket.on('playersJoined', function(){
+  //     console.log("players joined in create game");
+  //   });
+  // },
 
   createGameID: function () {
     var gameID = '';
