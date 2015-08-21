@@ -60,6 +60,7 @@ var UserProfileContainer = React.createClass({
 
 	loadUserSolvedQuestions: function() {
 		var userID = {userID: this.props.user._id};
+		console.log("loadUserSolvedQuestions ajax: ", this.props.user);
 
 		$.ajax({
 			url: window.location.origin + '/userProfile',
@@ -116,7 +117,7 @@ var UserSolved = React.createClass({
 		var questionNodes = this.props.solvedQuestions.map(function(solved) {
 			return (
 			<tr>
-	          <td><b>{solved.title}</b></td>
+	          <td><b>{solved.questionTitle}</b></td>
 	          <td><p>{solved.answer}</p></td>
 	        </tr>
 	      	)
@@ -125,6 +126,7 @@ var UserSolved = React.createClass({
 	      <div>
 	        <table className="questionContainer table table-hover">
 	          <tbody>
+	          	<tr><th>Solved Question</th><th>Answers</th></tr>
 	            {questionNodes}
 	          </tbody>
 	        </table>
@@ -132,6 +134,5 @@ var UserSolved = React.createClass({
 	    );
 	}
 });
-
 
 module.exports = UserProfileContainer;

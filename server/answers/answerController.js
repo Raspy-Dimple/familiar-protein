@@ -23,7 +23,7 @@ var saveAnswer = function(req, res, next) {
 };
 
 var loadSolvedQuestion = function(req, res, next) {
-  console.log("loadSolvedQuestion req.body: ", req.body.userID);
+  console.log("loadSolvedQuestion req.body: ", req.body);
   Answer.find({userID: req.body.userID})
   .exec(function(err, data) {
   	if (err) {
