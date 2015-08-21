@@ -2,6 +2,7 @@ var React = require('react');
 var AdvertView = require('./AdvertView.jsx');
 
 var Router = require('react-router');
+var Navigation = Router.Navigation;
 var Link = Router.Link;
 
 var UserProfileContainer = React.createClass({
@@ -22,6 +23,7 @@ var UserProfileContainer = React.createClass({
   		//this.getUserData(this.props.user.username);
 	  	console.log("PROPS! ", this.props);
   	}
+		this.loadUserSolvedQuestions();
   },
 
 	// This stuff might not work exactly right.
@@ -59,12 +61,12 @@ var UserProfileContainer = React.createClass({
   },
 
 	loadUserSolvedQuestions: function() {
-		var userID = {};
-		console.log("loadUserSolvedQuestions ajax: ", this.state.user);
+		var userID = this.props.user;
+		console.log("userObject: ", userID);
 
 		$.ajax({
 			url: window.location.origin + '/userProfile',
-			method: 'GET',
+			method: 'POST',
 			dataType: 'json',
 			contentType: "application/json; charset=utf-8",
 			data: JSON.stringify(userID),
@@ -76,10 +78,6 @@ var UserProfileContainer = React.createClass({
 				console.log("loadUserSolvedQuestions ajax error: ", error);
 			}
 		});
-	},
-
-	componentDidMount: function() {
-		this.loadUserSolvedQuestions();
 	},
 
 	render: function() {
