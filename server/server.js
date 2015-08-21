@@ -1,6 +1,7 @@
 var express = require('express');
 var sessions = require("client-sessions");
 var middleware = require('./config/middleware');
+var io = require('socket.io')(app);
 require('./config/db');
 
 var port = process.env.PORT || 3000;
@@ -14,6 +15,16 @@ app.use(sessions({
   duration: 24 * 60 * 60 * 1000, // how long the session will stay valid in ms
   activeDuration: 1000 * 60 * 5 // if expiresIn < activeDuration, the session will be extended by activeDuration milliseconds
 }));
+
+io.on('connection', function(socket){
+  console.log("a user connected");
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+  // socket.on('chat message', function(msg){
+  //   io.emit('')
+  // });
+});
 
 // Tracking and debugging user sessions.
 // app.use(function(req, res, next) {
@@ -34,4 +45,3 @@ middleware(app);
 // }
 
 module.exports = app;
-
