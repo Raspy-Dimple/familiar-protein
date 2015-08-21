@@ -59,8 +59,8 @@ var UserProfileContainer = React.createClass({
   },
 
 	loadUserSolvedQuestions: function() {
-		var userID = {userID: this.props.user._id};
-		console.log("loadUserSolvedQuestions ajax: ", this.props.user);
+		var userID = {};
+		console.log("loadUserSolvedQuestions ajax: ", this.state.user);
 
 		$.ajax({
 			url: window.location.origin + '/userProfile',
