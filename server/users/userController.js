@@ -18,8 +18,13 @@ var signup = function(req,res,next){
           } else {
             // Successfully created!
             console.log("Success! newUser === ", newUser);
-            utils.createSession(req, res, data);
+            utils.createSession(req, res, newUser);
             res.statusCode = 201;
+            res.send({
+              response: "SUCCESSFULLY LOGGED IN!", 
+              loggedIn: utils.isLoggedIn(req),
+              userInfo: req.session.user
+            });            
           }
         });
       });
