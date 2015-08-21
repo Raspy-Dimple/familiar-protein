@@ -76,26 +76,27 @@ var DetailView = React.createClass({
 
   handleAnswerSubmit: function() {
     var question = this.props.questions[this.props.params.qNumber - 1];
-    var qID = question._id;
+    var user = this.props.user;
     var qNumber = question.qNumber;
-    var answerData = {questionID: qID, answer: this.state.result};
-    console.log("qNumber: ", qNumber);
-    if (this.state.solved) {
-      $.ajax({
-        url: window.location.origin + "/answers/" + qNumber,
-        method: "POST",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(answerData),
-        success: function(data){
-          console.log("Post Answer: ", data);
-        },
-        error: function(xhr, status, err){
-          console.log("ERROR in Post", err);
-        }
-      });
+    var answerData = {questionID: question._id, questionTitle: question.title, userID: user._id, answer: this.state.result};
+    console.log("answerData: ", answerData);
+    if (this.state.solved && this.props.user._id) {
+        $.ajax({
+          url: window.location.origin + "/answers/" + qNumber,
+          method: "POST",
+          dataType: "json",
+          contentType: "application/json; charset=utf-8",
+          data: JSON.stringify(answerData),
+          success: function(data){
+            console.log("Post Answer: ", data);
+          },
+          error: function(xhr, status, err){
+            console.log("ERROR in Post", err);
+          }
+        });
     } else {
-      console.log("not solved no save!");
+      if (!this.props.user._id) {console.log("not logged in");}
+      if (!this.state.solved) {console.log("not solved no save!");}
     }
 
   },

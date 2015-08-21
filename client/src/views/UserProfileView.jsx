@@ -2,18 +2,20 @@ var React = require('react');
 var AdvertView = require('./AdvertView.jsx');
 
 var Router = require('react-router');
+var Navigation = Router.Navigation;
 var Link = Router.Link;
 
 var UserProfileContainer = React.createClass({
 
 	mixins: [Router.State, Router.Navigation],
 
-  getInitialState: function(){
-    return {
-    	username: null,
+	getInitialState: function() {
+		return {
+			userSolvedQuestions: [],
+			username: null,
     	user: {}
-    };
-  },
+		}
+	},
 
   componentDidMount: function() {
   	if (this.props.params.username === undefined) {
@@ -21,6 +23,7 @@ var UserProfileContainer = React.createClass({
   		//this.getUserData(this.props.user.username);
 	  	console.log("PROPS! ", this.props);
   	}
+		this.loadUserSolvedQuestions();
   },
 
 	// This stuff might not work exactly right.
@@ -57,11 +60,31 @@ var UserProfileContainer = React.createClass({
   	}
   },
 
+	loadUserSolvedQuestions: function() {
+		var userID = this.props.user;
+		console.log("userObject: ", userID);
+
+		$.ajax({
+			url: window.location.origin + '/userProfile',
+			method: 'POST',
+			dataType: 'json',
+			contentType: "application/json; charset=utf-8",
+			data: JSON.stringify(userID),
+			success: function(data) {
+				console.log("loadUserSolvedQuestions ajax success: ", data);
+				this.setState({userSolvedQuestions: data});
+			}.bind(this),
+			error: function(xhr, status, err) {
+				console.log("loadUserSolvedQuestions ajax error: ", error);
+			}
+		});
+	},
+
 	render: function() {
 		return (
 			<div>
-				<UserInfo user={this.state.user} />
-				{ /* // <UserSolved user={} question={} />*/ }
+				<UserInfo user={this.props.user} />
+				<UserSolved solvedQuestions={this.state.userSolvedQuestions} />
 				<AdvertView />
 			</div>
 		);
@@ -76,8 +99,9 @@ var UserInfo = React.createClass({
 					<img className="img-responsive" src={this.props.user.image} />
 				</div>
 				<div className="col-md-1">
-					<h2>{this.props.user.username}</h2>
-					<p>Email: </p>
+					<h2>Username: {this.props.user.username}</h2>
+					<p> Name: {this.props.user.name}</p>
+					<p>{this.props.user._id}</p>
 				</div>
 			</div>
 			
@@ -85,33 +109,28 @@ var UserInfo = React.createClass({
 	}
 });
 
-/*
-var UserSolved = React.createClass({
-	var userSolvedQuestions = this.props.userSolvedQuestions
-	render: function() {
-		return (
 
-		);
-			<div className="row">
-				<div className="col-md-2">
-					<h1>Test1</h1>
-				</div>
-				<div className="col-md-2">
-					<h1>Test2</h1>
-				</div>
-			</div>
-		)
-			<div className="row">
-				<div className="col-md-6 text-center">
-					<h1>Test1</h1>
-				</div>
-				<div className="col-md-6 text-center">
-					<h1>Test2</h1>
-				</div>
-			</div>
-		)
+var UserSolved = React.createClass({
+	render: function() {
+		var questionNodes = this.props.solvedQuestions.map(function(solved) {
+			return (
+			<tr>
+	          <td><b>{solved.questionTitle}</b></td>
+	          <td><p>{solved.answer}</p></td>
+	        </tr>
+	      	)
+		});
+	    return (
+	      <div>
+	        <table className="questionContainer table table-hover">
+	          <tbody>
+	          	<tr><th>Solved Question</th><th>Answers</th></tr>
+	            {questionNodes}
+	          </tbody>
+	        </table>
+	      </div>
+	    );
 	}
 });
-*/
 
 module.exports = UserProfileContainer;
