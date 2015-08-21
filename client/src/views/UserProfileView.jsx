@@ -8,12 +8,13 @@ var UserProfileContainer = React.createClass({
 
 	mixins: [Router.State, Router.Navigation],
 
-  getInitialState: function(){
-    return {
-    	username: null,
+	getInitialState: function() {
+		return {
+			userSolvedQuestions: [],
+			username: null,
     	user: {}
-    };
-  },
+		}
+	},
 
   componentDidMount: function() {
   	if (this.props.params.username === undefined) {
@@ -57,11 +58,34 @@ var UserProfileContainer = React.createClass({
   	}
   },
 
+	loadUserSolvedQuestions: function() {
+		var userID = {userID: this.props.user._id};
+
+		$.ajax({
+			url: window.location.origin + '/userProfile',
+			method: 'GET',
+			dataType: 'json',
+			contentType: "application/json; charset=utf-8",
+			data: JSON.stringify(userID),
+			success: function(data) {
+				console.log("loadUserSolvedQuestions ajax success: ", data);
+				this.setState({userSolvedQuestions: data});
+			}.bind(this),
+			error: function(xhr, status, err) {
+				console.log("loadUserSolvedQuestions ajax error: ", error);
+			}
+		});
+	},
+
+	componentDidMount: function() {
+		this.loadUserSolvedQuestions();
+	},
+
 	render: function() {
 		return (
 			<div>
-				<UserInfo user={this.state.user} />
-				{ /* // <UserSolved user={} question={} />*/ }
+				<UserInfo user={this.props.user} />
+				<UserSolved solvedQuestions={this.state.userSolvedQuestions} />
 				<AdvertView />
 			</div>
 		);
@@ -76,7 +100,8 @@ var UserInfo = React.createClass({
 					<img className="img-responsive" src={this.props.user.image} />
 				</div>
 				<div className="col-md-1">
-					<h2>{this.props.user.username}</h2>
+					<h2>Username: {this.props.user.username}</h2>
+					<p> Name: {this.props.user.name}</p>
 					<p>{this.props.user._id}</p>
 				</div>
 			</div>
@@ -85,33 +110,28 @@ var UserInfo = React.createClass({
 	}
 });
 
-/*
-var UserSolved = React.createClass({
-	var userSolvedQuestions = this.props.userSolvedQuestions
-	render: function() {
-		return (
 
-		);
-			<div className="row">
-				<div className="col-md-2">
-					<h1>Test1</h1>
-				</div>
-				<div className="col-md-2">
-					<h1>Test2</h1>
-				</div>
-			</div>
-		)
-			<div className="row">
-				<div className="col-md-6 text-center">
-					<h1>Test1</h1>
-				</div>
-				<div className="col-md-6 text-center">
-					<h1>Test2</h1>
-				</div>
-			</div>
-		)
+var UserSolved = React.createClass({
+	render: function() {
+		var questionNodes = this.props.solvedQuestions.map(function(solved) {
+			return (
+			<tr>
+	          <td><b>{solved.title}</b></td>
+	          <td><p>{solved.answer}</p></td>
+	        </tr>
+	      	)
+		});
+	    return (
+	      <div>
+	        <table className="questionContainer table table-hover">
+	          <tbody>
+	            {questionNodes}
+	          </tbody>
+	        </table>
+	      </div>
+	    );
 	}
 });
-*/
+
 
 module.exports = UserProfileContainer;

@@ -78,7 +78,7 @@ var DetailView = React.createClass({
     var question = this.props.questions[this.props.params.qNumber - 1];
     var user = this.props.user;
     var qNumber = question.qNumber;
-    var answerData = {questionID: question._id, userID: user._id, answer: this.state.result};
+    var answerData = {questionID: question._id, questionTitle: question.title, userID: user._id, answer: this.state.result};
     console.log("answerData: ", answerData);
     if (this.state.solved && this.props.user._id) {
         $.ajax({

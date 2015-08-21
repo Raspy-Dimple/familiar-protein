@@ -20,8 +20,21 @@ var saveAnswer = function(req, res, next) {
 			}
 		}
 	});
-}
+};
+
+var loadSolvedQuestion = function(req, res, next) {
+  console.log("loadSolvedQuestion req.body: ", req.body.userID);
+  Answer.find({userID: req.body.userID})
+  .exec(function(err, data) {
+  	if (err) {
+  		console.log("loadSolvedQuestion find error: ", err);
+  	} else {
+  		res.json(data);
+  	}
+  });
+};
 
 module.exports = {
-	saveAnswer: saveAnswer
+	saveAnswer: saveAnswer,
+	loadSolvedQuestion: loadSolvedQuestion
 }
