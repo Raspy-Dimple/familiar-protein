@@ -27,7 +27,6 @@ var JoinGameView = React.createClass({
       success: function(game){
         console.log("SUCCESS!", game);
         this.setState({game: game}); // update the game so that create view can access joined players
-        var socket = io();
         socket.emit("joining");
         this.transitionTo("waiting");
       }.bind(this),

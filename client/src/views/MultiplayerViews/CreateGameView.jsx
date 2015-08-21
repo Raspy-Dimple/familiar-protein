@@ -8,6 +8,12 @@ var CreateGameView = React.createClass({
   
   mixins: [Navigation, Router.State],
 
+  componentDidMount: function(){
+    socket.on('playersJoined', function(){
+      console.log("players joined in create game");
+    });
+  },
+
   createGameID: function () {
     var gameID = '';
     var validChars = 'ABCDEFGHJKLMNOPQRSTUVWXYZ123456789';
@@ -38,9 +44,14 @@ var CreateGameView = React.createClass({
     });
   },
 
+
   startGame: function(){
     console.log("starting game");
     this.transitionTo('question', {qNumber: 1}); // transition to first question
+  },
+
+  updatePlayers: function(){
+    console.log("updating players");
   },
 
   render: function(){

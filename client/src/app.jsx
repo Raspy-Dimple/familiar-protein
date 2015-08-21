@@ -19,6 +19,7 @@ var RouteHandler = Router.RouteHandler;
 var DefaultRoute = Router.DefaultRoute;
 var Route = Router.Route;
 
+var socket = io.connect();
 
 var App = React.createClass({
   getInitialState: function(){
@@ -50,12 +51,17 @@ var App = React.createClass({
     console.log('MOUNTED');
     this.isLoggedIn();
     this.loadAllQuestions();
+    // socket.on('connection', this.ConsoleLog);
   },
 
   // Whenever we update any component that's a child of our app,
   // let's kick off a request to check if we aren't logged in.
   componentDidUpdate: function() {
     this.isLoggedIn();
+  },
+
+  ConsoleLog: function(){
+    console.log("Logging");
   },
 
   // AJAX request to the server to check if the client is logged in.
