@@ -19,6 +19,8 @@ var CreateGameView = React.createClass({
     return gameID;
   },
 
+  players: null,
+
   createGame: function(gameID){
     var game = {id: gameID};
     $.ajax({
@@ -44,7 +46,7 @@ var CreateGameView = React.createClass({
   render: function(){
 
     var gameID = this.createGameID();
-    var game = this.createGame(gameID);
+    this.createGame(gameID);
 
     return (
       <div>

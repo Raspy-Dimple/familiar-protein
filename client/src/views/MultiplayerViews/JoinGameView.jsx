@@ -25,8 +25,8 @@ var JoinGameView = React.createClass({
       dataType: "json",
       data: dataObj,
       success: function(game){
-        // should get the game and then insert the user into the game
         console.log("SUCCESS!", game);
+        this.setState({game: game}); // update the game so that create view can access joined players
         this.transitionTo("waiting");
       }.bind(this),
       error: function(xhr, status, err){
