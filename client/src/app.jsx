@@ -13,11 +13,13 @@ var CreateGameView = require('./views/MultiplayerViews/CreateGameView.jsx');
 var JoinGameView = require('./views/MultiplayerViews/JoinGameView.jsx');
 var WaitGameView = require('./views/MultiplayerViews/WaitGameView.jsx');
 
+
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
 var DefaultRoute = Router.DefaultRoute;
 var Route = Router.Route;
 
+var socket = io.connect();
 
 var App = React.createClass({
   getInitialState: function(){
@@ -49,6 +51,9 @@ var App = React.createClass({
     console.log('MOUNTED');
     this.isLoggedIn();
     this.loadAllQuestions();
+    socket.on('playersJoined', function(){
+      console.log("players joined");
+    });
   },
 
   // Whenever we update any component that's a child of our app,
@@ -56,7 +61,6 @@ var App = React.createClass({
   componentDidUpdate: function() {
     this.isLoggedIn();
   },
-
   // AJAX request to the server to check if the client is logged in.
   // This is probably a DIRTY way to do it. REALLY DIRTY.
   
@@ -97,6 +101,10 @@ var App = React.createClass({
         <RouteHandler questions={this.state.questions} user={this.state.user} />
       </div>
     )
+  },
+
+  updateUsers: function(){
+    
   }
 
 });

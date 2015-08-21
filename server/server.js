@@ -1,11 +1,14 @@
 var express = require('express');
 var sessions = require("client-sessions");
 var middleware = require('./config/middleware');
+var socket = require('./config/socket.js');
 require('./config/db');
 
 var port = process.env.PORT || 3000;
-
 var app = express();
+var http = require('http');
+var server = http.createServer(app);
+
 
 // Setup option for user cookies
 app.use(sessions({
@@ -14,6 +17,7 @@ app.use(sessions({
   duration: 24 * 60 * 60 * 1000, // how long the session will stay valid in ms
   activeDuration: 1000 * 60 * 5 // if expiresIn < activeDuration, the session will be extended by activeDuration milliseconds
 }));
+
 
 // Tracking and debugging user sessions.
 // app.use(function(req, res, next) {
@@ -24,14 +28,23 @@ app.use(sessions({
 //   next();
 // });
 
+
+
+
 middleware(app);
+
+/* Socket.io communication */
+var io = require('socket.io').listen(server);
+io.sockets.on('connection', socket);
 
 // only execute if server.js was the root process rather than being required by other module,
 // for example, for access in test suite.
 // if (!module.parent) {
-  app.listen(port);
+  // app.listen(port);
+  server.listen(port, function(){
+    console.log("Listening on port: ", port);
+  });
   console.log('Server now listening on port ' + port);
 // }
 
 module.exports = app;
-
